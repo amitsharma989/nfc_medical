@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Write/Link NFC tag</title>
+    <style>
+        body, h1, h2, p, label, input, button {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://png.pngtree.com/thumb_back/fh260/background/20220906/pngtree-cool-wave-liquid-background-for-landing-page-website-image_1463455.jpg') no-repeat center center fixed;
+            background-size: cover;
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            padding: 20px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        .content {
+            padding-top: 80px;
+        }
+
+        header h1 {
+            text-align: center;
+        }
+
+        section {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            height: calc(100vh - 160px);
+            justify-content: center
+        }
+
+        form {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 8px;
+            margin-bottom: 16px;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+        }
+
+        button {
+            background-color: #007bff;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .action-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .url-container {
+            display: none;
+            background: white;
+            padding: 10px;
+            border-radius: 4px;
+            box-shadow: 0 0 5px rgba(0,0,0,0.1);
+            max-width: 500px;
+            width: 100%;
+            text-align: center;
+        }
+
+        .url-container a {
+            color: #007bff;
+            text-decoration: none;
+        }
+
+        .url-container a:hover {
+            text-decoration: underline;
+        }
+
+        footer {
+            background: rgba(51, 51, 51, 0.8);
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>Write/Link NFC tag</h1>
+        </div>
+    </header>
+
+    <div class="container content">
+        <section>
+            <form id="medical-info-form">
+                <label for="medical_id">Medical ID:</label>
+                <input type="text" id="medical_id" name="medical_id" required>
+
+                <label for="nfc_tag_id">NFC tag Id:</label>
+                <input type="text" id="nfc_tag_id" name="nfc_tag_id" required>
+
+                <div class="action-container">
+                    <button type="button" onclick="writeNfcTag()">Link</button>
+                    <div id="url-container" class="url-container">
+                        <a id="generated-id" href="#" target="_blank"></a>
+                        <button id="copy-btn" style="margin-left: 10px; padding: 8px 12px; border: none; background-color: #28a745; color: white; cursor: pointer;" disabled>Copy</button>
+                    </div>
+                </div>
+            </form>
+        </section>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Medical NFC Application</p>
+    </footer>
+
+    <script>
+        function writeNfcTag() {
+            const formData = new FormData(document.getElementById('medical-info-form'));
+            const data = {};
+            formData.forEach((value, key) => {
+                data[key] = value;
+            });
+
+            fetch('/write-nfc', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.json())
+            .then(data => {
+                alert(data.url);
+                let generatedEle = document.getElementById("generated-id");
+                let copyBtn = document.getElementById("copy-btn");
+                let urlContainer = document.getElementById("url-container");
+
+                if (data.url) {
+               
+                    generatedEle.setAttribute("href", data.url);
+                    generatedEle.innerText = data.url;
+                 
+                    urlContainer.style.display = 'block';
+                    copyBtn.disabled = false;
+
+                    copyBtn.addEventListener('click', () => {
+                        navigator.clipboard.writeText(data.url).then(() => {
+                            alert('URL copied to clipboard!');
+                        }).catch(err => {
+                            console.error('Failed to copy URL: ', err);
+                        });
+                    });
+                }
+            })
+            .catch(error => {
+                console.error('Unable to link medical info:', error);
+            });
+        }
+    </script>
+</body>
+</html>

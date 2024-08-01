@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Medical NFC Application - Home</title>
+    <style>
+        Reset some default styles
+        body, h1, h2, p {
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: Arial, sans-serif;
+            background: url('https://png.pngtree.com/thumb_back/fh260/background/20220906/pngtree-cool-wave-liquid-background-for-landing-page-website-image_1463455.jpg') no-repeat center center fixed;
+            background-size: cover; 
+            color: #333;
+            line-height: 1.6;
+        }
+
+        header {
+            background: rgba(51, 51, 51, 0.8); 
+            color: #fff;
+            padding: 2px 0;
+            position: fixed;
+            width: 100%;
+            top: 0;
+            left: 0;
+            z-index: 1000; 
+        }
+
+        .container {
+            width: 80%;
+            margin: auto;
+            overflow: hidden;
+        }
+
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #fff;
+        }
+
+        .menu {
+            display: flex;
+            gap: 20px; 
+        }
+
+        .menu a {
+            color: #fff;
+            text-decoration: none;
+            padding: 10px 15px;
+            font-size: 18px;
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .menu a:hover {
+            background: #353434;
+            color: #fff; 
+            border-radius: 4px;
+        }
+
+        .container-main {
+            padding-top: 80px; 
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 80vh; 
+        }
+
+        main {
+            width: 100%;
+            max-width: 800px; 
+            padding: 20px;
+            background: rgba(255, 255, 255, 0.8);
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+            text-align: center;
+        }
+
+        footer {
+            clear: both;
+            background: rgba(51, 51, 51, 0.8); 
+            color: #fff;
+            text-align: center;
+            padding: 10px;
+            position: fixed;
+            width: 100%;
+            bottom: 0;
+        }
+
+        
+        @media (max-width: 768px) {
+            nav {
+                flex-direction: column;
+                align-items: flex-start;
+            }
+
+            .menu {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .menu a {
+                padding: 10px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <nav>
+                <div class="logo">Medical NFC App</div>
+                <div class="menu">
+                    <a href="read-nfc">Read NFC Tag</a>
+                    <a href="write-nfc">Write NFC Tag</a>
+                    <a href="update-medical-info">Update Medical Info</a>
+                    <a href="get-medical-info">Get Medical Info</a>
+                </div>
+            </nav>
+        </div>
+    </header>
+
+    <div class="container container-main">
+        <main>
+            <section>
+                <h2>Welcome to Medical NFC Application</h2>
+                <p>Select an option from the sidebar to get started.</p>
+            </section>
+        </main>
+    </div>
+
+    <footer>
+        <p>&copy; 2024 Medical NFC Application</p>
+    </footer>
+</body>
+</html>
